@@ -1,2 +1,3 @@
 hello guys this is our first repo there is some change 
-now git fetch
+now git fetch new changes
+
