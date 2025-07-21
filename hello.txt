@@ -1,3 +1,30 @@
-hello guys this is our first repo there is some change 
+git tag v1.0
+git push origin v1.0
+git tag -a v1.1 -m "message new tag"
+ 
+git show v1.1
+ 
+ 
+ 
+git stash: Saves your changes to the stash.
+git stash list: Lists all your stashed changes.
+git stash show: Shows the changes in the latest stash.
+git stash apply: Applies the latest stash (without removing it).
+git stash pop: Applies the latest stash and then removes it from the stack.
+git stash drop: Removes the latest stash.
+git stash clear: Removes all stashes.hello guys this is our first repo there is some change 
 now git fetch new changes
+
+
+Exercise -7:
+ 
+ 
+1.Create two branches called nov2025 and dec205 ( gitcheckout –b “nov2025” -> git push same for dec2025)
+2.Git checkout nov2025 -> to make it current branch
+3.Add any file and commit and push that should go to the nov2025 branch
+4.Change the branch by using git checkout dec2025
+5.You should not see the file that you created for the nov3025 branch
+●
+N.B.: git checkout –b <branchname> creates and switch branch
+git checkout    <branchname>  only switches branch
 
