@@ -1,0 +1,23 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+                               http://www.springframework.org/schema/beans/spring-beans.xsd">
+                         
+                               
+  <bean id="departmet" class="com.wipro.springdemo.beans.Department">
+  <property name = "deptCode" value = "Fin"/>
+  <property name = "deptName" value = "Finance"/>
+  
+   </bean>
+  
+  <!--  <bean id = "college" class="com.wipro.springdemo.beans.College">
+  <property name="clgName" value = "SIT"/>
+  <property name="departmet" ref="departmet"/>
+  </bean> -->
+  <bean id = "college" class = "com.wipro.springdemo.beans.College">
+  <constructor-arg  value="DKTE"/>
+  <constructor-arg  ref="departmet"/>
+  
+  </bean>
+  
+</beans>
