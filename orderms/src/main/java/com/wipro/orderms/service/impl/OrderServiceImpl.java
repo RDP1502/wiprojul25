@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Order findById(int id) {
 		// TODO Auto-generated method stub
-		Order order = orderRepo.findById(id).orElse(null);
+		Order order = orderRepo.findById(id).get();
 		if(order !=null) {
 			ResponseEntity<Payment> paymentResponse = paymentConnectService.findById(id);
 			if(paymentResponse.getStatusCode()==HttpStatus.OK)
