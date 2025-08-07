@@ -34,24 +34,21 @@ public class OrderServiceImpl implements OrderService {
 	public void save(Order order) {
 		// TODO Auto-generated method stub
 		order.setOrderStatus("I");
-		orderRepo.save(order);
-		String url = "http://paymentms/payment";
 		Payment payment = new Payment();
 		payment.setOrderId(order.getId());
 		payment.setPaymentAmount(order.getOrderValue());
 		payment.setPaymentStatus(true);
-		
+		orderRepo.save(order);
+		String url = "http://paymentms/payment";
+
 		//try {
 			
-			ResponseEntity<Payment> response = restTemplate.postForEntity(url, payment, Payment.class);
+			//ResponseEntity<Payment> response = restTemplate.postForEntity(url, payment, Payment.class);
+			ResponseEntity<Payment>   response=paymentConnectService.savePaymentData(payment);
 			if(response.getStatusCode() == HttpStatusCode.valueOf(200)) {
 				order.setOrderStatus("P");
 			}
-		//}catch(Exception e){
-//			System.out.println(e);
-//			order.setOrderStatus("C");
-//			
-//		}
+
 		orderRepo.save(order);
 		
 	}
@@ -63,9 +60,6 @@ public class OrderServiceImpl implements OrderService {
 		//return "System is down";
 	}
 
-	
-	
-	
 	
 	@Override
 	public List<Order> findAll() {
@@ -86,26 +80,28 @@ public class OrderServiceImpl implements OrderService {
 		Order order = orderRepo.findById(id).get();
 		if(order !=null) {
 			ResponseEntity<Payment> paymentResponse = paymentConnectService.findById(id);
-			if(paymentResponse.getStatusCode()==HttpStatus.OK)
+			
+			if(paymentResponse.getStatusCode()==HttpStatus.OK) 
+				
             {
-                            
-                Payment allPayments = paymentResponse.getBody();
+				Payment allPayments = paymentResponse.getBody();
+				if(order.getId() == allPayments.getOrderId()) {
+					order.setPayment(allPayments);
+				}
+                
 
-                Payment matchedPayment = null;
-                if (allPayments != null) {
-                    matchedPayment.setId(allPayments.getId());
-                    matchedPayment.setOrderId(allPayments.getOrderId());
-                    matchedPayment.setPaymentAmount(allPayments.getPaymentAmount());  
-                }
+//                Payment matchedPayment = null;
+//                if (allPayments != null) {
+//                    matchedPayment.setId(allPayments.getId());
+//                    matchedPayment.setOrderId(allPayments.getOrderId());
+//                    matchedPayment.setPaymentAmount(allPayments.getPaymentAmount());  
+//                }
 
-                order.setPayment(matchedPayment);
+                //order.setPayment(matchedPayment);
             }
-//        
+       
 		}
 		return order;
 	}
-//	.stream()
-//    .filter(payment -> payment.getOrderId() == order.getId())
-//    .findFirst()
-//    .orElse(null);
+
 }
