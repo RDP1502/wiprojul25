@@ -1,0 +1,192 @@
+
+<div class="border border-success p-2 mb-2">
+<div class="profile-container">
+  <div class="profile">
+    <img [src]="userIcon" class="user-icon" />
+    <div class="user-details">
+    <h2>{{ loggedUser.firstName }} {{ loggedUser.lastName }}</h2>
+    <p>Email: {{ loggedUser.emailId }}</p>
+  </div>
+</div>
+
+
+  @if (role === 'ROLE_ADMIN') {
+    <div class="admin-section">
+      <h3>Admin Panel</h3>
+      <button class="btn btn-primary me-2" (click)="manage()">Manage Users</button>
+      <button class="btn btn-warning me-2" (click)="addProduct() ">Add Products</button>
+      <button class="btn btn-info me-2">View All Orders</button>
+      <button class="btn btn-danger me-2" (click)="logout(userId)">Logout</button>
+    </div>
+  }
+
+  @if (role === 'ROLE_USER') {
+    <div class="user-section">
+      <h3>Welcome,{{loggedUser.firstName| uppercase}}</h3>
+      <button class="btn btn-info" (click)="updateProfile()">Update Profile</button>
+      <button class="btn btn-info" (click)="shopNow()">Shop Now</button>
+      <button class="btn btn-danger" (click)="logout(userId)">Logout</button>
+    </div>
+  }
+</div>
+</div>
+
+
+@if (update==true) {
+<div class="update-container">
+  <div class="update-form">
+    <h3>Update Profile</h3>
+
+      <div class="form-row">
+        <input type="text" class="form-control" [(ngModel)]="updatedUser.firstName" placeholder="First name">
+      </div>
+      <div class="form-row">
+        <input type="text" class="form-control" [(ngModel)]="updatedUser.lastName" placeholder="Last name">
+      </div>
+      <div class="form-row">
+        <input type="email" class="form-control"[(ngModel)]="updatedUser.emailId" placeholder="Email">
+      </div>
+      <div class="form-row">
+        <input type="text" class="form-control" [(ngModel)]="updatedUser.address" placeholder="Address">
+      </div>
+
+      <div class="form-row text-center">
+        <button routerLink="/home" class="btn btn-success" (click) = "updateUser()">Save</button>
+      </div>
+    <!-- </form> -->
+  </div>
+</div>
+}@else {
+  @if (role=='ROLE_USER') {
+  <div class="order-history">
+      <h4>Order History </h4>
+  </div>
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Order Details</th>
+      <th scope="col">Order Status</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  @for (order of orders; track $index) {
+  <tbody>
+    <tr>
+      <th scope="row">{{order.id}}</th>
+      <td>{{order.orderDate| date:'short'}}, {{order.totalAmount| currency:'INR'}} , {{order.orderId}}</td>
+      <td>{{order.orderStatus}}</td>
+      <td><button class="btn btn-danger" (click)="updateOrder(order.id!)"> Cancel </button></td>
+    </tr>
+  </tbody>
+  }
+</table>
+
+  }
+}
+@if (role=='ROLE_ADMIN') {
+@if (manageUser == true) {
+  
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">User Name</th>
+      <th scope="col">Address</th>
+      <th scope="col">Email Id</th>
+      <th scope="col">Type</th>
+    </tr>
+  </thead>
+  @for (user of users; track $index) {
+  <tbody>
+    <tr>
+      <th scope="row">{{$index+1}}</th>
+      <td>{{user.firstName}} {{user.lastName}}</td>
+      <td>{{user.address}}</td>
+      <td>{{user.emailId}}</td>
+      <td>{{user.userType!| userType}}</td>
+    </tr>
+
+  }
+
+</table>
+}
+@if (manageUser == false&& update == false) {
+  <div class = "product-list">
+    <h4>Product List</h4>
+  </div>
+
+
+<div class="container-fluid mt-5">
+  <div class="container text-center">
+    <div class="row g-3 align-items-center">
+
+      <!-- Search by Product Name -->
+      <div class="col-md-6">
+        <div class="input-group">
+          <input 
+            type="search" 
+            class="form-control" 
+            [(ngModel)]="searchProductName" 
+            placeholder="Search by Name" 
+            aria-label="Search by Name" />
+          <button 
+            type="button" 
+            class="btn btn-outline-primary" 
+            (click)="onSearch()"  
+            data-mdb-ripple-init>
+            Search
+          </button>
+        </div>
+      </div>
+
+      <!-- Search by Category -->
+      <div class="col-md-6">
+        <div class="input-group">
+          <input 
+            type="search" 
+            class="form-control" 
+            [(ngModel)]="searchProductCategory" 
+            placeholder="Search by Category" 
+            aria-label="Search by Category" />
+          <button 
+            type="button" 
+            class="btn btn-outline-primary" 
+            (click)="onSearch()"  
+            data-mdb-ripple-init>
+            Search
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Product Category</th>
+      <th scope="col">Avaliable Quantity </th>
+      <th scope="col"> Actions </th>
+    </tr>
+  </thead>
+  @for (product of filteredProducts; track $index) {
+  <tbody>
+    <tr>
+      <th scope="row">{{$index+1}}</th>
+      <td>{{product.productName}}</td>
+      <td>{{product.productCat}}</td>
+      <td>{{product.availableQty}}</td>
+       <td>
+        <button class="btn btn-info me-2" (click)="edit(product.id!)">Edit</button>
+        <button class="btn btn-danger" (click)="deleteProd(product.id!)" >Delete</button>
+      </td>
+    </tr>
+  </tbody>
+   }
+</table>
+}
+}

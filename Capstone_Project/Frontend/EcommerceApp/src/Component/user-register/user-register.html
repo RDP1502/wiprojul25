@@ -1,0 +1,71 @@
+<section class="register-hero">
+  <div class="container min-vh-100 d-flex align-items-center">
+    <div class="row justify-content-center w-100">
+      <!-- narrower, centered card -->
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-lg border-0 rounded-4">
+          <div class="card-body p-4 p-md-5">
+            <h2 class="text-uppercase text-center mb-4">Create an account</h2>
+
+            <form>
+              <div class="mb-4">
+                <label class="form-label" for="userName">Your First Name</label>
+                <input id="userName" class="form-control form-control-lg"
+                       [(ngModel)]="newUser.firstName" name="userName"/>
+              </div>
+              <div class="mb-4">
+                <label class="form-label" for="userName">Your Last Name</label>
+                <input id="userLastName" class="form-control form-control-lg"
+                       [(ngModel)]="newUser.lastName" name="userLastName"/>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label" for="userName">Your Address</label>
+                <input id="userAddress" class="form-control form-control-lg"
+                       [(ngModel)]="newUser.address" name="userAddress"/>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label" for="userEmail">Your Email</label>
+                <input type="email" id="userEmail" class="form-control form-control-lg"
+                       [(ngModel)]="newUser.emailId" name="userEmail"/>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label" for="enteredPassWord">Password</label>
+                <input type="password" id="enteredPassWord" class="form-control form-control-lg"
+                       [(ngModel)]="newUser.passWord" name="passWord"/>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label" for="passwordChecker">Repeat your password</label>
+                <input type="password" id="passwordChecker" class="form-control form-control-lg"
+                       name="passwordChecker" [(ngModel)]="repeatPassword" />
+              </div>
+
+              <div class="form-check d-flex justify-content-center mb-4">
+                <input class="form-check-input me-2" type="checkbox" id="tos"/>
+                <label class="form-check-label" for="tos">
+                  I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
+                </label>
+              </div>
+
+              <div class="d-grid">
+                <button type="button" (click)="register()"
+                        class="btn btn-success btn-lg">
+                  Register
+                </button>
+              </div>
+
+              <p class="text-center text-muted mt-4 mb-0">
+                Have already an account?
+                <a [routerLink]="['/login']" class="fw-bold text-body"><u>Login here</u></a>
+              </p>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

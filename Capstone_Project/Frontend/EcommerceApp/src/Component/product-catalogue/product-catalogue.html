@@ -1,0 +1,76 @@
+
+
+<!-- Navbar for Product Catalogue -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Products</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
+        <a class="nav-link active" aria-current="page" href="#">Order History</a>
+        <a class="nav-link active" aria-current="page" routerLink="/cart">Cart
+          <span class="badge bg-danger">{{itemCount}}</span>
+        </a>
+        <nav class="navbar bg-body-tertiary">
+  <form class="container-fluid justify-content-start">
+    <button class="btn btn-outline-danger me-2" type="button" (click)="logout(userId)">Logout</button>
+  </form>
+</nav>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Search Bar -->
+
+<div class="container text-center">
+  <div class="row align-items-start">
+    <div class="col">
+     <div class="input-group">
+  <input type="search" class="form-control rounded" [(ngModel)]="searchProductName" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+  <button type="button" class="btn btn-outline-primary" (click)="onSearch()"  data-mdb-ripple-init>search</button>
+    </div>
+    </div>
+    <!-- Dropdown button -->
+    <div class="col">
+      <div class="input-group">
+  <input type="search" class="form-control rounded" [(ngModel)]="searchProductCategory" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+  <button type="button" class="btn btn-outline-primary" (click)="onSearch()"  data-mdb-ripple-init>search</button>
+    </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Dropdown -->
+ 
+
+<!-- Product Cards -->
+
+<div class="container mt-4">
+  <div class="row">
+    @for (product of filteredProducts; track $index) {
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <img src="{{product.imgUrl}}" class="card-img-top" alt="Product Image">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{ product.productName }}</h5>
+             <h6 class="text-muted">{{ product.price | currency: 'INR'}}</h6>
+            <h6 class="text-muted">{{ product.productCat }}</h6>
+            <p class="card-text">{{ product.productDesc }}</p>
+
+            <div class="mt-auto">
+              <button class="btn btn-success btn-sm me-2" (click)="addToCart(product)">
+                Add to Cart
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+

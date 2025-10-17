@@ -1,0 +1,13 @@
+input.ng-valid.ng-dirty {
+  border: 2px solid green;
+  border-radius: 5px;
+}
+
+input.ng-invalid.ng-dirty {
+  border: 2px solid red;
+  border-radius: 5px;
+}
+
+.register-hero{
+  background: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp') center/cover no-repeat;
+}
